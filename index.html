@@ -47,6 +47,17 @@
     let clickMeButtons = document.querySelectorAll(".actionButton");
 let selectedButtons = [];
 
+const clickMeButtons = document.querySelectorAll(".actionButton");
+let selectedButtons = [];
+
+// Selects These Buttons on Page Load
+document.addEventListener("DOMContentLoaded", function (event) {
+  document.getElementById("pageSpeedButton").click();
+  document.getElementById("googleMobileButton").click();
+  document.getElementById("largestContentfulPaint").click();
+});
+
+// Check if Button Clicked
 const check = () => {
   for (let i = 0; i < clickMeButtons.length; i++) {
     if (
@@ -54,23 +65,30 @@ const check = () => {
       selectedButtons.length >= 3
     ) {
       document.getElementById(clickMeButtons[i].id).disabled = true;
+      document.getElementById(clickMeButtons[i].id).classList.add("disabled");
+      console.log(clickMeButtons[i].id);
     } else {
       document.getElementById(clickMeButtons[i].id).disabled = false;
+      document
+        .getElementById(clickMeButtons[i].id)
+        .classList.remove("disabled");
     }
   }
 };
 
+// Selected Buttons
 const checkSelectedButtons = (id) => {
   if (selectedButtons.includes(id)) {
     const index = selectedButtons.indexOf(id);
     selectedButtons.splice(index, 1);
+    console.log(index);
   } else if (selectedButtons.length < 3) {
     selectedButtons.push(id);
     console.log(selectedButtons);
   }
 };
 
-//buttons
+// Button Array
 let ttiButton = clickMeButtons[0];
 let pageSpeedButton = clickMeButtons[1];
 let googleDesktopButton = clickMeButtons[2];
@@ -81,12 +99,11 @@ let firstInputDelay = clickMeButtons[6];
 let largestContentfulPaint = clickMeButtons[7];
 // Time to Interactive Button and Hidden Div
 
-ttiButton.addEventListener("click", (e) => {
+ttiButton.addEventListener("click", () => {
   checkSelectedButtons("ttiButton");
   check();
-  outlines = document.querySelectorAll("#ttiButton");
+  const outlines = document.querySelectorAll("#ttiButton");
   outlines.forEach((x) => x.classList.toggle("outline"));
-
   const hiddenTTI = document.querySelectorAll(".tti-speed");
   hiddenTTI.forEach((x) => x.classList.toggle("visibility-hidden"));
 });
@@ -105,10 +122,8 @@ pageSpeedButton.addEventListener("click", () => {
 googleDesktopButton.addEventListener("click", () => {
   checkSelectedButtons("googleDesktopButton");
   check();
-
   const outlines = document.querySelectorAll("#googleDesktopButton");
   outlines.forEach((x) => x.classList.toggle("outline"));
-
   const hiddenGDesktop = document.querySelectorAll(".google-desktop");
   hiddenGDesktop.forEach((x) => x.classList.toggle("visibility-hidden"));
 });
@@ -117,10 +132,8 @@ googleDesktopButton.addEventListener("click", () => {
 googleMobileButton.addEventListener("click", () => {
   checkSelectedButtons("googleMobileButton");
   check();
-
   const outlines = document.querySelectorAll("#googleMobileButton");
   outlines.forEach((x) => x.classList.toggle("outline"));
-
   const hiddenGMobile = document.querySelectorAll(".google-mobile");
   hiddenGMobile.forEach((x) => x.classList.toggle("visibility-hidden"));
 });
@@ -129,10 +142,8 @@ googleMobileButton.addEventListener("click", () => {
 cumulativeLayoutShift.addEventListener("click", () => {
   checkSelectedButtons("cumulativeLayoutShift");
   check();
-
   const outlines = document.querySelectorAll("#cumulativeLayoutShift");
   outlines.forEach((x) => x.classList.toggle("outline"));
-
   const cumulativeLayoutShift = document.querySelectorAll(
     ".cumulativeLayoutShift"
   );
@@ -143,10 +154,8 @@ cumulativeLayoutShift.addEventListener("click", () => {
 firstContentfulPaint.addEventListener("click", () => {
   checkSelectedButtons("firstContentfulPaint");
   check();
-
   const outlines = document.querySelectorAll("#firstContentfulPaint");
   outlines.forEach((x) => x.classList.toggle("outline"));
-
   const firstContentfulPaint = document.querySelectorAll(
     ".firstContentfulPaint"
   );
@@ -157,10 +166,8 @@ firstContentfulPaint.addEventListener("click", () => {
 firstInputDelay.addEventListener("click", () => {
   checkSelectedButtons("firstInputDelay");
   check();
-
   const outlines = document.querySelectorAll("#firstInputDelay");
   outlines.forEach((x) => x.classList.toggle("outline"));
-
   const firstInputDelay = document.querySelectorAll(".firstInputDelay");
   firstInputDelay.forEach((x) => x.classList.toggle("visibility-hidden"));
 });
@@ -169,10 +176,8 @@ firstInputDelay.addEventListener("click", () => {
 largestContentfulPaint.addEventListener("click", () => {
   checkSelectedButtons("largestContentfulPaint");
   check();
-
   const outlines = document.querySelectorAll("#largestContentfulPaint");
   outlines.forEach((x) => x.classList.toggle("outline"));
-
   const largestContentfulPaint = document.querySelectorAll(
     ".largestContentfulPaint"
   );
@@ -182,7 +187,8 @@ largestContentfulPaint.addEventListener("click", () => {
 });
 </script>
 <style>
-    :root {
+   /* Root Colors */
+:root {
   --blue-lightest: #3cb6e3;
   --blue-light: #00b3ff;
   --blue-dark: #055d82;
@@ -197,13 +203,13 @@ largestContentfulPaint.addEventListener("click", () => {
   --light-row: #f4f4f4;
   --selected-row: #dbdbdb;
 }
-
+/* Body */
 body {
   height: 100%;
   background-color: #ffffff;
   margin: 0 22%;
 }
-
+/* Text Row Setup */
 .text-row {
   display: grid;
   justify-items: start;
@@ -218,8 +224,33 @@ h3 {
   font-family: "poppins", sans-serif;
   font-weight: 500;
 }
+.button-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 25% 20px;
+  grid-gap: 20px;
+  place-items: center;
+}
+.page-speed-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 23rem;
+  column-gap: 10px;
+  outline: 2px solid var(--green-dark);
+  padding: 4px 6px;
+  border-radius: 20px;
+}
 
-.buttonSection {
+.lighthouse-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 23rem;
+  column-gap: 10px;
+  outline: 2px solid var(--green-dark);
+  padding: 5px 6px;
+  border-radius: 20px;
+}
+.crux-button-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 25% 20px;
@@ -227,57 +258,65 @@ h3 {
   place-items: center;
 }
 
+.crux-buttons-one {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 23rem;
+  column-gap: 10px;
+  outline: 2px solid var(--green-dark);
+  padding: 4px 6px;
+  border-radius: 20px;
+}
+.crux-buttons-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 23rem;
+  column-gap: 10px;
+  outline: 2px solid var(--green-dark);
+  padding: 4px 6px;
+  border-radius: 20px;
+}
+
+/* Button Style */
 button {
   align-self: center;
-  width: 200px;
-  height: 25px;
   border-radius: 20px;
-  background: var(--green-dark);
   color: white;
   border: solid 2px var(--green-dark);
   font-family: "poppins", sans-serif;
   font-size: 0.8rem;
+}
+button:not(.disabled) {
   cursor: pointer;
 }
-button:hover {
-  outline: solid 2px var(--orange-light) !important;
+button .disabled {
+  cursor: not-allowed !important;
 }
-.actionButton.outline {
-  border: solid 2px var(--orange-light);
-  color: var(--blue-dark) !important;
-  background: transparent !important;
+button:hover:not(.disabled) {
+  outline: solid 2px var(--orange-light) !important;
 }
 .actionButton {
   background: var(--green-dark);
   color: white;
   border: solid 2px var(--green-dark);
+  transition: 0.7s;
 }
-.page-speed-buttons {
-  outline: 2px solid var(--green-dark);
-  padding: 4px 6px;
-  border-radius: 20px;
+.actionButton.outline:not(.disabled) {
+  border: solid 2px var(--orange-light);
+  color: var(--blue-dark) !important;
+  background: transparent !important;
+  transition: 0.7s;
 }
-.lighthouse-buttons {
-  outline: 2px solid var(--green-dark);
-  padding: 5px 6px;
-  border-radius: 20px;
+.actionButton.outline.disabled {
+  border: solid 2px var(--grey-dark);
+  color: white;
+  background-color: var(--grey-dark);
 }
-.cruxbuttonSection {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 25% 20px;
-  place-items: center;
-}
-.crux-buttons {
-  outline: 2px solid var(--green-dark);
-  padding: 3px 6px;
-  border-radius: 20px;
-}
-
 .active {
   box-shadow: 0px 1px 2px 0 #000;
   background-color: red;
 }
+/* Text Visibility */
 .visibility-hidden {
   visibility: hidden;
 }
